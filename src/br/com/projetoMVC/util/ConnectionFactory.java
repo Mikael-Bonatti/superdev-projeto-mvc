@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 
-public class connectionFactory {
+public class ConnectionFactory {
 	
 	public static final String PATH = "jdbc:postgresql://localhost:5432/db_superdev";
 	public static final String USER = "postgres";
