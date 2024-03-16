@@ -19,7 +19,6 @@ public class ProdutoDAOImpl implements GenericDAO {
 	public ProdutoDAOImpl () throws Exception {
 		try {
 			this.conn = ConnectionFactory.getConnection();
-			System.out.println("ProdutoDAOImpl: Conectado com sucesso");
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
@@ -53,13 +52,41 @@ public class ProdutoDAOImpl implements GenericDAO {
 			}
 		}
 		
-		return null;
+		return lista;
 	}
 
 	@Override
 	public Object listarPorId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Produto produto = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM produto WHERE id = ?";
+		
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			rs = stmt.executeQuery();
+			
+			if (rs.next()) {
+				produto = new Produto();
+				produto.setId(rs.getInt("id"));
+				produto.setDescricao(rs.getString("descricao"));
+			}
+			
+		} catch (SQLException ex) {
+			System.out.println("Problemas na DAO ao listar Produto por id! " + ex.getMessage());
+			ex.printStackTrace();
+		} finally {
+			try {
+				ConnectionFactory.closeConnection(conn, stmt, rs);
+			} catch (Exception e) {
+				System.out.println("Problemas na DAO ao fechar conexão! " + e.getMessage());
+				e.printStackTrace();
+			}
+		}
+		
+		return produto;
 	}
 
 	@Override
