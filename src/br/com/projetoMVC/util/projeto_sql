@@ -5,3 +5,13 @@ CREATE TABLE produto (
     descricao VARCHAR(150) NOT NULL,
 	CONSTRAINT pk_produto PRIMARY KEY (id)
 );
+
+INSERT INTO produto (descricao) VALUES ('Notebook')
+
+SELECT * FROM produto WHERE id = 1
+
+UPDATE produto
+SET descricao = 'novo valor'
+WHERE id = 1;
+
+DELETE FROM produto WHERE id = 1;
